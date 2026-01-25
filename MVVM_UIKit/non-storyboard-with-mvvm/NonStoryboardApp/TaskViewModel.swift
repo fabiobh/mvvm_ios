@@ -12,6 +12,8 @@ import Foundation
 class TaskViewModel {
     private var tasks: [Task] = []
     
+    var onTasksUpdated: (() -> Void)?
+    
     var tasksCount: Int {
         return tasks.count
     }
@@ -23,5 +25,6 @@ class TaskViewModel {
     func addTask(title: String) {
         let newTask = Task(title: title, isCompleted: false)
         tasks.append(newTask)
+        onTasksUpdated?()
     }
 }

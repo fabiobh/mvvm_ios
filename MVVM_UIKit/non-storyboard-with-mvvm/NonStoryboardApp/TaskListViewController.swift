@@ -19,6 +19,15 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
         
         setupUI()
+        setupBindings()
+    }
+    
+    private func setupBindings() {
+        viewModel.onTasksUpdated = { [weak self] in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
     }
     
     private func setupUI() {
@@ -76,6 +85,5 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UITableVi
 extension TaskListViewController: AddTaskViewControllerDelegate {
     func didAddTask(title: String) {
         viewModel.addTask(title: title)
-        tableView.reloadData()
     }
 }
